@@ -1,0 +1,76 @@
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.Connection"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>User</title>
+</head>
+<body>
+	<%
+	Connection con;
+
+	Class.forName("com.mysql.cj.jdbc.Driver");
+	String url = "jdbc:mysql://localhost/nothing"; //DB 가져오는거
+
+	String id = "root";
+	String pwd = "1234";
+	con = DriverManager.getConnection(url, id, pwd);
+	Statement stmt = con.createStatement();
+	
+	
+	
+	String searchUiName = request.getParameter("uiName");
+	String sql = "SELECT UI_NUM, UI_NAME, UI_ID, UI_PWD, UI_DATE FROM USER_INFO";
+	ResultSet rs = stmt.executeQuery(sql);
+	
+	if(searchUiName != null){
+		sql += " WHERE UI_NAME LIKE '%" + searchUiName + "%'";
+	}
+	
+	
+	
+	
+	%>
+	
+	<%
+	out.println("<h3>" + "USER_INFO 테이블" + "</h3>");
+	out.println("검색한 이름 : " + searchUiName);
+	
+	%>
+	
+	<form>
+		<input type="text" name="uiName" placeholder="검색할 이름을 작성해주세요">
+		<button>검색</button>
+	</form>
+	
+	<table border="1">
+		<tr>
+			<th>번호</th>
+			<th>이름</th>
+			<th>아이디</th>
+			<th>작성일자</th>
+		</tr>
+			<%
+			while (rs.next()) {
+				int uiNum = rs.getInt("UI_NUM");
+				String uiName = rs.getString("UI_NAME");
+				String uiID = rs.getString("UI_ID");
+				String uiDate = rs.getString("UI_DATE");
+				
+				out.println("<tr>");
+				out.println("<td>" + uiNum + "</td>");
+				out.println("<td>" + uiName + "</td>");
+				out.println("<td>" + uiID + "</td>");
+				out.println("<td>" + uiDate + "</td>");
+				out.println("<tr>");
+			}
+			%>
+	</table>
+	<button onclick="location.href='/user-insert.jsp'">유저등록</button>
+</body>
+</html>

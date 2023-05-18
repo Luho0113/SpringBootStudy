@@ -1,0 +1,5 @@
+INDEX VERSION 1.131
+C:\webStudyB_JE\study\spring_study\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\4069684495.index
+\web\src\main\java
+C:\webStudyB_JE\study\spring_study\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1365088607.index
+\p-web\src\main\java
